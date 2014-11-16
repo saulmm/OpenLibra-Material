@@ -1,21 +1,28 @@
 package com.saulmm.openlibra.fragments;
 
 
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.saulmm.openlibra.R;
-import com.saulmm.openlibra.models.Book;
+import com.saulmm.openlibra.activities.DetailActivity;
 import com.saulmm.openlibra.models.BookList;
 import com.saulmm.openlibra.network.Api;
 import com.saulmm.openlibra.views.adapters.BookAdapter;
@@ -23,6 +30,9 @@ import com.saulmm.openlibra.views.adapters.BookAdapter;
 import java.io.StringReader;
 
 public class BooksFragment extends Fragment {
+
+    public static SparseArray<Bitmap> photoCache = new SparseArray<Bitmap>(1);
+
 
     private ProgressDialog loadingDialog;
     private GridView bookGrid;
@@ -44,7 +54,28 @@ public class BooksFragment extends Fragment {
             .asString()
             .setCallback(booksCallback);
 
-        Log.d("[DEBUG]", "BooksFragment onCreateView - "+Api.getLastBooks());
+
+        // Set gridListener
+        bookGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+                detailIntent.putExtra("position", position);
+
+                ImageView coverImage = (ImageView) view.findViewById(R.id.item_book_img);
+                ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
+
+
+                photoCache.put(position, coverImage.getDrawingCache());
+
+
+                // Setup the transition to the detail activity
+                ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "cover" + position);
+                startActivity(detailIntent, options.toBundle());
+
+            }
+        });
 
         return rootView;
     }

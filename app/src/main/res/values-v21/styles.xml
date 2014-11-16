@@ -7,5 +7,11 @@
         <item name="android:colorAccent">@color/color_accent</item>
 
         <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <style name="DetailActivityTheme" parent="AppTheme">
+
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

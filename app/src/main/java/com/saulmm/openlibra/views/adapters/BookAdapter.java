@@ -55,7 +55,7 @@ public class BookAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
         ViewHolder holder = null;
@@ -76,13 +76,16 @@ public class BookAdapter extends BaseAdapter {
             Book currentBook = books.get(position);
             holder.bookTitle.setText(currentBook.getTitle());
             holder.bookAuthor.setText(currentBook.getAuthor());
+            holder.bookCover.setDrawingCacheEnabled(true);
 
             final ViewHolder finalHolder = holder;
 
             Ion.with(context)
-                    .load(books.get(position).getCover())
-                    .intoImageView(holder.bookCover)
-                    .withBitmapInfo();
+                .load(books.get(position).getCover())
+                .intoImageView(holder.bookCover)
+                .withBitmapInfo();
+
+
 
             try {
                 // TODO unify requests
@@ -101,6 +104,7 @@ public class BookAdapter extends BaseAdapter {
 
                                 finalHolder.bookTitle.setTextColor(palette.getLightVibrantColor(defaultTextColor));
                                 finalHolder.bookAuthor.setTextColor(palette.getVibrantColor(defaultTextColor));
+                                finalHolder.bookCover.setTransitionName("cover"+position);
 
 //                                // Se the image tint
 //                                int darkVibrant = palette.getMutedColor(defaultBackgroundcolor);
