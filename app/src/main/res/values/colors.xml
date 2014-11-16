@@ -4,4 +4,10 @@
     <color name="book_without_palette">#1C1D23</color>
     <color name="text_without_palette">#ffeae1da</color>
 
+    <!-- theme -->
+    <color name="color_primary">#F50057</color>
+    <color name="color_primary_dark">#AE0554</color>
+    <color name="color_accent">#6734BA</color>
+
+
 </resources>
