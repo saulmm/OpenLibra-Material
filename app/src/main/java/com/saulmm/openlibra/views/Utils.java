@@ -8,7 +8,7 @@ import android.view.animation.PathInterpolator;
 
 public class Utils {
 
-    public final static int COLOR_ANIMATION_DUARTION = 300;
+    public final static int COLOR_ANIMATION_DURATION = 1000;
 
     public static void animateViewColor (View v, int startColor, int endColor) {
 
@@ -16,7 +16,7 @@ public class Utils {
             new ArgbEvaluator(), startColor, endColor);
 
         animator.setInterpolator(new PathInterpolator(0.4f,0f,1f,1f));
-        animator.setDuration(COLOR_ANIMATION_DUARTION);
+        animator.setDuration(COLOR_ANIMATION_DURATION);
         animator.start();
     }
 }

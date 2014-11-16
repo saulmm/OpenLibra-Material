@@ -1,38 +1,33 @@
 package com.saulmm.openlibra.views.adapters;
 
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Color;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.PathInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.ImageViewBitmapInfo;
 import com.koushikdutta.ion.Ion;
 import com.saulmm.openlibra.R;
 import com.saulmm.openlibra.models.Book;
 import com.saulmm.openlibra.views.Utils;
 
 import java.util.ArrayList;
-import java.util.concurrent.Future;
 
 public class BookAdapter extends BaseAdapter {
 
     private final ArrayList<Book> books;
     private final Context context;
     private final int defaultTextColor;
-    private final int defaultBackGroundColor;
+    private final int defaultBackgroundcolor;
 
     public BookAdapter(ArrayList<Book> books, Context context) {
 
@@ -40,7 +35,7 @@ public class BookAdapter extends BaseAdapter {
         this.context = context;
 
         defaultTextColor = context.getResources().getColor(R.color.text_without_palette);
-        defaultBackGroundColor = context.getResources().getColor(R.color.book_without_palette);
+        defaultBackgroundcolor = context.getResources().getColor(R.color.book_without_palette);
     }
 
     @Override
@@ -107,15 +102,23 @@ public class BookAdapter extends BaseAdapter {
                                 finalHolder.bookTitle.setTextColor(palette.getLightVibrantColor(defaultTextColor));
                                 finalHolder.bookAuthor.setTextColor(palette.getVibrantColor(defaultTextColor));
 
+//                                // Se the image tint
+//                                int darkVibrant = palette.getMutedColor(defaultBackgroundcolor);
+//                                finalHolder.bookCover.setColorFilter(Color.argb(100,
+//                                    Color.red(darkVibrant),
+//                                    Color.green(darkVibrant),
+//                                    Color.blue(darkVibrant))); // White Tint
+
                                 // Animate the view color
-                                Utils.animateViewColor(finalHolder.bookTextcontainer, defaultTextColor,
-                                        palette.getDarkVibrantColor(defaultBackGroundColor));
+                                Utils.animateViewColor(finalHolder.bookTextcontainer, defaultBackgroundcolor,
+                                    palette.getDarkVibrantColor(defaultBackgroundcolor));
                                 }
                             });
                         }
                         }
                     });
 
+           // TODO workaround
             } catch (NullPointerException e) {
 
                 Log.d("[DEBUG]", "BookAdapter getView - Null exception message produced");

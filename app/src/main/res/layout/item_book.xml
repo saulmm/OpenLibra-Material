@@ -16,7 +16,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:background="@color/text_without_palette"/>
+            android:background="@color/book_without_palette"/>
 
         <FrameLayout
             android:id="@+id/item_book_text_container"
