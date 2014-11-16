@@ -65,15 +65,12 @@ public class BooksFragment extends Fragment {
 
                 ImageView coverImage = (ImageView) view.findViewById(R.id.item_book_img);
                 ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
-
-
                 photoCache.put(position, coverImage.getDrawingCache());
-
 
                 // Setup the transition to the detail activity
                 ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "cover" + position);
-                startActivity(detailIntent, options.toBundle());
 
+                startActivity(detailIntent, options.toBundle());
             }
         });
 
@@ -83,9 +80,8 @@ public class BooksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
+
 
     private FutureCallback<String> booksCallback = new FutureCallback<String>() {
 

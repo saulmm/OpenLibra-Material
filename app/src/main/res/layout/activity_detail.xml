@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -7,10 +7,24 @@
     <ImageView
         android:id="@+id/activity_detail_cover"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:src="@drawable/ic_launcher"
         android:scaleType="centerCrop"
         />
 
+    <View
+        android:id="@+id/activity_detail_fab"
+        android:transitionName="fab"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/ripple_round"
+        android:stateListAnimator="@anim/fab_animation"
+        android:elevation="5dp"
+        android:layout_below="@+id/activity_detail_cover"
+        android:layout_marginTop="-26dp"
+        android:layout_alignParentEnd="true"
+        />
 
-</LinearLayout>
+
+</RelativeLayout>
