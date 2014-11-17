@@ -38,6 +38,10 @@ public class BookAdapter extends BaseAdapter {
         defaultBackgroundcolor = context.getResources().getColor(R.color.book_without_palette);
     }
 
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
     @Override
     public int getCount() {
 
@@ -73,7 +77,7 @@ public class BookAdapter extends BaseAdapter {
 
         if (holder != null) {
 
-            Book currentBook = books.get(position);
+            final Book currentBook = books.get(position);
             holder.bookTitle.setText(currentBook.getTitle());
             holder.bookAuthor.setText(currentBook.getAuthor());
             holder.bookCover.setDrawingCacheEnabled(true);
@@ -84,8 +88,6 @@ public class BookAdapter extends BaseAdapter {
                 .load(books.get(position).getCover())
                 .intoImageView(holder.bookCover)
                 .withBitmapInfo();
-
-
 
             try {
                 // TODO unify requests
@@ -106,14 +108,6 @@ public class BookAdapter extends BaseAdapter {
                                 finalHolder.bookAuthor.setTextColor(palette.getVibrantColor(defaultTextColor));
                                 finalHolder.bookCover.setTransitionName("cover"+position);
 
-//                                // Se the image tint
-//                                int darkVibrant = palette.getMutedColor(defaultBackgroundcolor);
-//                                finalHolder.bookCover.setColorFilter(Color.argb(100,
-//                                    Color.red(darkVibrant),
-//                                    Color.green(darkVibrant),
-//                                    Color.blue(darkVibrant))); // White Tint
-
-                                // Animate the view color
                                 Utils.animateViewColor(finalHolder.bookTextcontainer, defaultBackgroundcolor,
                                     palette.getDarkVibrantColor(defaultBackgroundcolor));
                                 }

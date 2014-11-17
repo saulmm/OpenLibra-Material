@@ -2,6 +2,7 @@ package com.saulmm.openlibra.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.ImageView;
 
 import com.saulmm.openlibra.R;
 import com.saulmm.openlibra.fragments.BooksFragment;
+import com.saulmm.openlibra.models.Book;
+import com.saulmm.openlibra.other.CustomAnimatorListener;
+import com.saulmm.openlibra.other.CustomTransitionListener;
 
 
 public class DetailActivity extends Activity {
@@ -20,13 +24,20 @@ public class DetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
         getActionBar().hide();
+
+        // Recover items from the intent
         int position = getIntent().getIntExtra("position",0);
+        Book selectedBook = (Book) getIntent().getSerializableExtra("selected_book");
+
+        // Recover book cover from BooksFragment cache
+        Bitmap bookCoverBitmap = BooksFragment.photoCache.get(position);
+
+        setContentView(R.layout.activity_detail);
 
         // Get image from cache
         ImageView bookCover = (ImageView) findViewById(R.id.activity_detail_cover);
-        bookCover.setImageBitmap(BooksFragment.photoCache.get(position));
+        bookCover.setImageBitmap(bookCoverBitmap);
         bookCover.setTransitionName("cover" + position);
 
         // Configure fab
@@ -35,32 +46,18 @@ public class DetailActivity extends Activity {
         fabButton.setScaleY(0);
 
         // Show FAB after transition
-        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
-
-            @Override
-            public void onTransitionStart(Transition transition) {}
+        getWindow().getSharedElementEnterTransition().addListener(new CustomTransitionListener() {
 
             @Override
             public void onTransitionEnd(Transition transition) {
+                super.onTransitionEnd(transition);
 
                 ViewPropertyAnimator propertyAnimator = fabButton.animate().setStartDelay(30)
                         .scaleX(1).scaleY(1);
 
                 propertyAnimator.start();
             }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {}
-
-            @Override
-            public void onTransitionPause(Transition transition) {}
-
-            @Override
-            public void onTransitionResume(Transition transition) {}
         });
-
-
-
     }
 
     @Override
@@ -70,21 +67,12 @@ public class DetailActivity extends Activity {
             .scaleX(0).scaleY(0);
 
         propertyAnimator.start();
-
-        propertyAnimator.setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {}
-
+        propertyAnimator.setListener(new CustomAnimatorListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
+
                 coolBack();
             }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {}
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {}
         });
 
     }

@@ -1,10 +1,15 @@
 package com.saulmm.openlibra.models;
 
-public class Book {
+import android.support.v7.graphics.Palette;
+
+import java.io.Serializable;
+
+public class Book implements Serializable {
 
     private String title;
     private String cover;
     private String author;
+
 
     public String getTitle() {
         return title;
@@ -28,13 +33,5 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", cover='" + cover + '\'' +
-                '}';
     }
 }

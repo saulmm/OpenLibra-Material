@@ -23,19 +23,22 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.saulmm.openlibra.R;
 import com.saulmm.openlibra.activities.DetailActivity;
+import com.saulmm.openlibra.models.Book;
 import com.saulmm.openlibra.models.BookList;
 import com.saulmm.openlibra.network.Api;
 import com.saulmm.openlibra.views.adapters.BookAdapter;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 
 public class BooksFragment extends Fragment {
 
     public static SparseArray<Bitmap> photoCache = new SparseArray<Bitmap>(1);
 
-
     private ProgressDialog loadingDialog;
     private GridView bookGrid;
+    private BookAdapter bookAdapter;
+    private ArrayList<Book> books;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,22 +58,24 @@ public class BooksFragment extends Fragment {
             .setCallback(booksCallback);
 
 
-        // Set gridListener
         bookGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-                detailIntent.putExtra("position", position);
+            Book selectedBook = books.get(position);
 
-                ImageView coverImage = (ImageView) view.findViewById(R.id.item_book_img);
-                ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
-                photoCache.put(position, coverImage.getDrawingCache());
+            Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+            detailIntent.putExtra("position", position);
+            detailIntent.putExtra("selected_book", selectedBook);
 
-                // Setup the transition to the detail activity
-                ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "cover" + position);
+            ImageView coverImage = (ImageView) view.findViewById(R.id.item_book_img);
+            ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
+            photoCache.put(position, coverImage.getDrawingCache());
 
-                startActivity(detailIntent, options.toBundle());
+            // Setup the transition to the detail activity
+            ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "cover" + position);
+
+            startActivity(detailIntent, options.toBundle());
             }
         });
 
@@ -85,6 +90,9 @@ public class BooksFragment extends Fragment {
 
     private FutureCallback<String> booksCallback = new FutureCallback<String>() {
 
+
+
+
         @Override
         public void onCompleted(Exception e, String result) {
 
@@ -97,10 +105,12 @@ public class BooksFragment extends Fragment {
 
             // Serialize reader into objects
             Gson gson = new Gson();
-            BookList books = gson.fromJson(reader, BookList.class);
+            BookList bookList = gson.fromJson(reader, BookList.class);
+            books = bookList.getBooks();
 
             // Update adapter
-            bookGrid.setAdapter(new BookAdapter(books.getBooks(), getActivity()));
+            bookAdapter = new BookAdapter(books, getActivity());
+            bookGrid.setAdapter(bookAdapter);
             bookGrid.deferNotifyDataSetChanged();
 
             // Dismiss loading dialog
