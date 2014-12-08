@@ -7,11 +7,9 @@ import android.widget.ScrollView;
 /**
  * Created by saulmm on 19/11/14.
  */
-public class ObservableScrollView extends com.emilsjolander.components.StickyScrollViewItems.StickyScrollView {
+public class ObservableScrollView extends ScrollView {
 
     private ScrollViewListener scrollViewListener = null;
-
-
 
     public ObservableScrollView(Context context) {
         super(context);

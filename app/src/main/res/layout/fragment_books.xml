@@ -4,14 +4,11 @@
         android:layout_height="match_parent"
     >
 
-    <GridView
-        android:id="@+id/fragment_last_books_grid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_last_books_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="auto_fit"
         android:gravity="center"
-        android:horizontalSpacing="4dp"
-        android:verticalSpacing="4dp"
-        android:stretchMode="columnWidth"/>
+    />
 
 </FrameLayout>

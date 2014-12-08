@@ -6,21 +6,21 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.saulmm.openlibra.OnItemClickListener;
 import com.saulmm.openlibra.R;
 import com.saulmm.openlibra.activities.DetailActivity;
 import com.saulmm.openlibra.models.Book;
@@ -36,15 +36,18 @@ public class BooksFragment extends Fragment {
     public static SparseArray<Bitmap> photoCache = new SparseArray<Bitmap>(1);
 
     private ProgressDialog loadingDialog;
-    private GridView bookGrid;
     private BookAdapter bookAdapter;
     private ArrayList<Book> books;
+    private RecyclerView bookRecycler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_books, container, false);
-        bookGrid = (GridView) rootView.findViewById(R.id.fragment_last_books_grid);
+        bookRecycler = (RecyclerView) rootView.findViewById(R.id.fragment_last_books_recycler);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        bookRecycler.setLayoutManager(gridLayoutManager);
 
         // Init and show progress dialog
         loadingDialog = new ProgressDialog(getActivity());
@@ -56,28 +59,6 @@ public class BooksFragment extends Fragment {
             .load(Api.getLastBooks())
             .asString()
             .setCallback(booksCallback);
-
-
-        bookGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            Book selectedBook = books.get(position);
-
-            Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-            detailIntent.putExtra("position", position);
-            detailIntent.putExtra("selected_book", selectedBook);
-
-            ImageView coverImage = (ImageView) view.findViewById(R.id.item_book_img);
-            ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
-            photoCache.put(position, coverImage.getDrawingCache());
-
-            // Setup the transition to the detail activity
-            ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "cover" + position);
-
-            startActivity(detailIntent, options.toBundle());
-            }
-        });
 
         return rootView;
     }
@@ -108,10 +89,11 @@ public class BooksFragment extends Fragment {
             BookList bookList = gson.fromJson(reader, BookList.class);
             books = bookList.getBooks();
 
+            BookAdapter recyclerAdapter = new BookAdapter(books);
+            recyclerAdapter.setOnItemClickListener(recyclerRowClickListener);
+
             // Update adapter
-            bookAdapter = new BookAdapter(books, getActivity());
-            bookGrid.setAdapter(bookAdapter);
-            bookGrid.deferNotifyDataSetChanged();
+            bookRecycler.setAdapter(recyclerAdapter);
 
             // Dismiss loading dialog
             loadingDialog.dismiss();
@@ -120,6 +102,27 @@ public class BooksFragment extends Fragment {
         } else {
             Log.d("[DEBUG]", "BooksFragment onCompleted - ERROR: "+e.getMessage());
         }
+        }
+    };
+
+    private OnItemClickListener recyclerRowClickListener = new OnItemClickListener() {
+
+        @Override
+        public void onClick(View v, int position) {
+            Book selectedBook = books.get(position);
+
+            Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+            detailIntent.putExtra("position", position);
+            detailIntent.putExtra("selected_book", selectedBook);
+
+            ImageView coverImage = (ImageView) v.findViewById(R.id.item_book_img);
+            ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
+            photoCache.put(position, coverImage.getDrawingCache());
+
+            // Setup the transition to the detail activity
+            ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(), v, "cover" + position);
+            startActivity(detailIntent, options.toBundle());
+
         }
     };
 }
