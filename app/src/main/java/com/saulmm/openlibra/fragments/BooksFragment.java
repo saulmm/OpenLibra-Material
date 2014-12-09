@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,9 +121,11 @@ public class BooksFragment extends Fragment {
             photoCache.put(position, coverImage.getDrawingCache());
 
             // Setup the transition to the detail activity
-            ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(), v, "cover" + position);
-            startActivity(detailIntent, options.toBundle());
+            ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(),
+                new Pair<View, String>(coverImage, "cover" + position));
 
+            startActivity(detailIntent, options.toBundle());
+            getActivity().overridePendingTransition(0,0);
         }
     };
 }
