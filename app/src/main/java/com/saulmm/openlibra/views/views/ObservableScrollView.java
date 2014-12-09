@@ -1,8 +1,10 @@
-package com.saulmm.openlibra;
+package com.saulmm.openlibra.views.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
+
+import com.saulmm.openlibra.ScrollViewListener;
 
 /**
  * Created by saulmm on 19/11/14.
