@@ -1,131 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<RelativeLayout
+<com.saulmm.openlibra.views.views.ObservableScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/parent_relative"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
-    <com.saulmm.openlibra.ObservableScrollView
-        android:id="@+id/scroll"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         >
 
-        <RelativeLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/activity_detail_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="248dp"
+            android:minHeight="?attr/actionBarSize"
             >
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/activity_detail_toolbar"
+            <ImageView
+                android:id="@+id/activity_detail_cover"
                 android:layout_width="match_parent"
-                android:layout_height="248dp"
-                android:minHeight="?attr/actionBarSize"
-                >
-
-                <ImageView
-                    android:id="@+id/activity_detail_cover"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_launcher"
-                    />
-            </android.support.v7.widget.Toolbar>
-
-            <FrameLayout
-                android:id="@+id/activity_detail_title_container"
-                android:layout_width="match_parent"
-                android:layout_height="128dp"
-                android:layout_below="@id/activity_detail_toolbar"
-                android:elevation="4dp"
-                android:background="?colorPrimary"
-             >
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    >
-
-                    <TextView
-                        android:id="@+id/activity_detail_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="72dp"
-                        android:text="An amazing title"
-                        android:ellipsize="end"
-                        android:textSize="24sp"
-                        android:textColor="#FFF"
-                        />
-
-                    <TextView
-                        android:id="@+id/activity_detail_subtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/activity_detail_title"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="72dp"
-                        android:text="The best subtitle"
-                        android:textColor="#FFF"
-                        />
-
-                </RelativeLayout>
-
-
-            </FrameLayout>
-
-            <ImageButton
-                android:id="@+id/activity_detail_fab"
-                android:layout_width="@dimen/fab_size"
-                android:layout_height="@dimen/fab_size"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/activity_detail_toolbar"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="-26dp"
-                android:background="@drawable/ripple_round"
-                android:elevation="4dp"
-                android:src="@drawable/ic_file_download_white_36dp"
-                android:stateListAnimator="@anim/fab_animation"
-                android:transitionName="fab"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_launcher"
                 />
+        </android.support.v7.widget.Toolbar>
 
-            <FrameLayout
-                android:id="@+id/card_view"
-                android:layout_width="match_parent"
+        <FrameLayout
+            android:id="@+id/activity_detail_title_container"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_below="@id/activity_detail_toolbar"
+            android:elevation="4dp"
+            android:background="?colorPrimary"
+         >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/activity_detail_toolbar"
-                android:layout_gravity="center"
-                android:layout_marginBottom="?attr/actionBarSize"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="8dp"
-                >
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@id/activity_detail_title_container"
+                android:layout_gravity="center_vertical"
                 >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="72dp"
+                    android:id="@+id/activity_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingLeft="72dp"
+                    android:text="An amazing title"
+                    android:ellipsize="end"
+                    android:textSize="24sp"
+                    android:textColor="#FFF"
                     />
 
-            </LinearLayout>
-        </RelativeLayout>
-    </com.saulmm.openlibra.ObservableScrollView>
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/activity_detail_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activity_detail_title"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingLeft="72dp"
+                    android:text="The best subtitle"
+                    android:textColor="#FFF"
+                    />
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/activity_detail_fab"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/activity_detail_toolbar"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="-26dp"
+            android:background="@drawable/ripple_round"
+            android:elevation="4dp"
+            android:src="@drawable/ic_file_download_white_36dp"
+            android:stateListAnimator="@anim/fab_animation"
+            android:transitionName="fab"
+            />
+
+        <FrameLayout
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_detail_toolbar"
+            android:layout_gravity="center"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            >
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/activity_detail_title_container"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="72dp"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+</com.saulmm.openlibra.views.views.ObservableScrollView>
 
