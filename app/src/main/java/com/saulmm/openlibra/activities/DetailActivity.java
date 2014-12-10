@@ -162,6 +162,9 @@ public class DetailActivity extends Activity {
             getWindow().setStatusBarColor(vibrantSwatch.getRgb());
             getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
 
+            TextView summaryTitle = (TextView) findViewById(R.id.activity_detail_summary_title);
+            summaryTitle.setTextColor(vibrantSwatch.getRgb());
+
             TextView titleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_title);
             titleTV.setTextColor(vibrantSwatch.getTitleTextColor());
             titleTV.setText(selectedBook.getTitle());

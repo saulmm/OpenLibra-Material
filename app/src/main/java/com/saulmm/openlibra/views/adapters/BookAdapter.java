@@ -78,8 +78,8 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
 
                                 Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
 
-                                booksViewHolder.bookTitle.setTextColor(palette.getLightVibrantColor(vibrantSwatch.getTitleTextColor()));
-                                booksViewHolder.bookAuthor.setTextColor(palette.getVibrantColor(vibrantSwatch.getTitleTextColor()));
+                                booksViewHolder.bookTitle.setTextColor(vibrantSwatch.getTitleTextColor());
+                                booksViewHolder.bookAuthor.setTextColor(vibrantSwatch.getTitleTextColor());
                                 booksViewHolder.bookCover.setTransitionName("cover" + position);
                                 booksViewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -89,7 +89,7 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
                                 });
 
                                 Utils.animateViewColor(booksViewHolder.bookTextcontainer, defaultBackgroundcolor,
-                                        palette.getDarkVibrantColor(vibrantSwatch.getRgb()));
+                                    vibrantSwatch.getRgb());
                             }
                         });
                     }

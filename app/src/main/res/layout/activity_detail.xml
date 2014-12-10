@@ -119,6 +119,7 @@
             >
 
             <TextView
+                android:id="@+id/activity_detail_summary_title"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"

@@ -117,6 +117,7 @@ public class BooksFragment extends Fragment {
 
         @Override
         public void onClick(View v, int position) {
+
             Book selectedBook = books.get(position);
 
             Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
@@ -130,7 +131,6 @@ public class BooksFragment extends Fragment {
             // Setup the transition to the detail activity
             ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(),
                 new Pair<View, String>(coverImage, "cover" + position));
-
 
             startActivity(detailIntent, options.toBundle());
         }
