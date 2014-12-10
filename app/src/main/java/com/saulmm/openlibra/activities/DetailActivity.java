@@ -13,6 +13,7 @@ import android.view.ViewPropertyAnimator;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.saulmm.openlibra.R;
@@ -31,6 +32,7 @@ public class DetailActivity extends Activity {
     private View titleContainer;
     private View titlesContainer;
     private Book selectedBook;
+    private LinearLayout bookInfoLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class DetailActivity extends Activity {
 
         // Recover book cover from BooksFragment cache
         Bitmap bookCoverBitmap = BooksFragment.photoCache.get(position);
-        final ImageView toolbarBookCover = (ImageView) findViewById(R.id.activity_detail_cover);
+        ImageView toolbarBookCover = (ImageView) findViewById(R.id.activity_detail_cover);
         toolbarBookCover.setImageBitmap(bookCoverBitmap);
 
         // Fab button
@@ -56,20 +58,22 @@ public class DetailActivity extends Activity {
 
         // Book summary card
         contentCard = (FrameLayout) findViewById(R.id.card_view);
-        contentCard.setScaleY(0);
-        contentCard.setPivotY(0);
+        Utils.configuredHideYView(contentCard);
+
+        // Book info layout
+        bookInfoLayout = (LinearLayout) findViewById(R.id.activity_detail_book_info);
+        Utils.configuredHideYView(bookInfoLayout);
 
         // Title container
         titleContainer =  findViewById(R.id.activity_detail_title_container);
-        titleContainer.setScaleY(0);
-        titleContainer.setPivotY(0);
+        Utils.configuredHideYView(titleContainer);
 
-        // Define toolbar
+        // Define toolbar as the shared element
         final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_detail_toolbar);
         toolbar.setBackground(new BitmapDrawable(getResources(), bookCoverBitmap));
         toolbar.setTransitionName("cover" + position);
 
-        // Add a listener when the transition ends to animate the fab button
+        // Add a listener to get noticed when the transition ends to animate the fab button
         getWindow().getSharedElementEnterTransition().addListener(sharedTransitionListener);
 
         // Generate palette colors
@@ -80,6 +84,13 @@ public class DetailActivity extends Activity {
     /**
      * I use a listener to get notified when the enter transition ends, and with that notifications
      * build my own coreography built with the elements of the UI
+     *
+     * Animations order
+     *
+     * 1. The image is animated automatically by the SharedElementTransition
+     * 2. The layout that contains the titles
+     * 3. An alpha transition to show the text of the titles
+     * 3. A scale animation to show the book info
      */
     private CustomTransitionListener sharedTransitionListener = new CustomTransitionListener() {
 
@@ -97,7 +108,9 @@ public class DetailActivity extends Activity {
             super.onAnimationEnd(animation);
             titlesContainer.startAnimation(AnimationUtils.loadAnimation(DetailActivity.this, R.anim.alpha_on));
             titlesContainer.setVisibility(View.VISIBLE);
+
             Utils.showViewByScale(fabButton).start();
+            Utils.showViewByScale(bookInfoLayout).start();
             }
         });
 
@@ -112,6 +125,8 @@ public class DetailActivity extends Activity {
 
         titlesContainer.startAnimation(AnimationUtils.loadAnimation(DetailActivity.this, R.anim.alpha_off));
         titlesContainer.setVisibility(View.INVISIBLE);
+
+        Utils.hideViewByScaleY(bookInfoLayout);
 
         hideTitleAnimator.setListener(new CustomAnimatorListener() {
 
@@ -139,25 +154,25 @@ public class DetailActivity extends Activity {
         @Override
         public void onGenerated(Palette palette) {
 
-            if (palette.getVibrantSwatch() != null) {
+        if (palette.getVibrantSwatch() != null) {
 
-                Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
-                titleContainer.setBackgroundColor(vibrantSwatch.getRgb());
+            Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
+            titleContainer.setBackgroundColor(vibrantSwatch.getRgb());
 
-                getWindow().setStatusBarColor(vibrantSwatch.getRgb());
-                getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
+            getWindow().setStatusBarColor(vibrantSwatch.getRgb());
+            getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
 
-                TextView titleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_title);
-                titleTV.setTextColor(vibrantSwatch.getTitleTextColor());
-                titleTV.setText(selectedBook.getTitle());
+            TextView titleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_title);
+            titleTV.setTextColor(vibrantSwatch.getTitleTextColor());
+            titleTV.setText(selectedBook.getTitle());
 
-                TextView subtitleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_subtitle);
-                subtitleTV.setTextColor(vibrantSwatch.getTitleTextColor());
-                subtitleTV.setText(selectedBook.getAuthor());
+            TextView subtitleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_subtitle);
+            subtitleTV.setTextColor(vibrantSwatch.getTitleTextColor());
+            subtitleTV.setText(selectedBook.getAuthor());
 
-                ((TextView) titleContainer.findViewById(R.id.activity_detail_subtitle))
-                    .setTextColor(vibrantSwatch.getTitleTextColor());
-            }
+            ((TextView) titleContainer.findViewById(R.id.activity_detail_subtitle))
+                .setTextColor(vibrantSwatch.getTitleTextColor());
+        }
         }
     };
 

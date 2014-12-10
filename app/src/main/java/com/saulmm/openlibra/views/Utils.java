@@ -10,7 +10,7 @@ import android.view.animation.PathInterpolator;
 public class Utils {
 
     public final static int COLOR_ANIMATION_DURATION = 1000;
-    public final static int DEFAULT_DELAY = 50;
+    public final static int DEFAULT_DELAY = 0;
 
     public static void animateViewColor (View v, int startColor, int endColor) {
 
@@ -20,6 +20,12 @@ public class Utils {
         animator.setInterpolator(new PathInterpolator(0.4f,0f,1f,1f));
         animator.setDuration(COLOR_ANIMATION_DURATION);
         animator.start();
+    }
+
+    public static void configuredHideYView (View v) {
+
+        v.setScaleY(0);
+        v.setPivotY(0);
     }
 
     public static ViewPropertyAnimator hideViewByScaleXY(View v) {

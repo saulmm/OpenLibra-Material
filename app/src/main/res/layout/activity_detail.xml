@@ -108,11 +108,13 @@
         </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/activity_detail_book_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:background="#EEEEEE"
             android:layout_below="@id/activity_detail_title_container"
             >
 
@@ -131,8 +133,6 @@
                 android:lineSpacingExtra="4dp"
                 android:text="@string/lorem"
                 />
-
-
 
         </LinearLayout>
     </RelativeLayout>
