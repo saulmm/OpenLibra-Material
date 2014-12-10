@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ public class DetailActivity extends Activity {
     private FrameLayout contentCard;
     private View fabButton;
     private View titleContainer;
+    private View titlesContainer;
+    private Book selectedBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,9 @@ public class DetailActivity extends Activity {
 
         // Recover items from the intent
         final int position = getIntent().getIntExtra("position",0);
-        Book selectedBook = (Book) getIntent().getSerializableExtra("selected_book");
+        selectedBook = (Book) getIntent().getSerializableExtra("selected_book");
+
+        titlesContainer = findViewById(R.id.activity_detail_titles);
 
         // Recover book cover from BooksFragment cache
         Bitmap bookCoverBitmap = BooksFragment.photoCache.get(position);
@@ -90,6 +95,8 @@ public class DetailActivity extends Activity {
             public void onAnimationEnd(Animator animation) {
 
             super.onAnimationEnd(animation);
+            titlesContainer.startAnimation(AnimationUtils.loadAnimation(DetailActivity.this, R.anim.alpha_on));
+            titlesContainer.setVisibility(View.VISIBLE);
             Utils.showViewByScale(fabButton).start();
             }
         });
@@ -102,6 +109,10 @@ public class DetailActivity extends Activity {
     public void onBackPressed() {
 
         ViewPropertyAnimator hideTitleAnimator = Utils.hideViewByScaleXY(fabButton);
+
+        titlesContainer.startAnimation(AnimationUtils.loadAnimation(DetailActivity.this, R.anim.alpha_off));
+        titlesContainer.setVisibility(View.INVISIBLE);
+
         hideTitleAnimator.setListener(new CustomAnimatorListener() {
 
             @Override
@@ -113,8 +124,8 @@ public class DetailActivity extends Activity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
 
-                    super.onAnimationEnd(animation);
-                    coolBack();
+                super.onAnimationEnd(animation);
+                coolBack();
                 }
             });
             }
@@ -136,8 +147,13 @@ public class DetailActivity extends Activity {
                 getWindow().setStatusBarColor(vibrantSwatch.getRgb());
                 getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
 
-                ((TextView) titleContainer.findViewById(R.id.activity_detail_title))
-                    .setTextColor(vibrantSwatch.getTitleTextColor());
+                TextView titleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_title);
+                titleTV.setTextColor(vibrantSwatch.getTitleTextColor());
+                titleTV.setText(selectedBook.getTitle());
+
+                TextView subtitleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_subtitle);
+                subtitleTV.setTextColor(vibrantSwatch.getTitleTextColor());
+                subtitleTV.setText(selectedBook.getAuthor());
 
                 ((TextView) titleContainer.findViewById(R.id.activity_detail_subtitle))
                     .setTextColor(vibrantSwatch.getTitleTextColor());

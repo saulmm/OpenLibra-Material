@@ -43,21 +43,15 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
     }
 
     @Override
-    public BooksViewHolder onCreateViewHolder(ViewGroup viewGroup, final int position) {
+    public BooksViewHolder onCreateViewHolder(ViewGroup viewGroup,  int position) {
 
         View rowView = LayoutInflater.from(viewGroup.getContext())
             .inflate(R.layout.item_book, viewGroup, false);
 
         this.context = viewGroup.getContext();
         defaultBackgroundcolor = context.getResources().getColor(R.color.book_without_palette);
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClickListener.onClick(v, position);
-            }
-        });
 
-        return new BooksViewHolder(rowView);
+        return new BooksViewHolder(rowView, onItemClickListener);
     }
 
     @Override
@@ -87,6 +81,12 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
                                 booksViewHolder.bookTitle.setTextColor(palette.getLightVibrantColor(vibrantSwatch.getTitleTextColor()));
                                 booksViewHolder.bookAuthor.setTextColor(palette.getVibrantColor(vibrantSwatch.getTitleTextColor()));
                                 booksViewHolder.bookCover.setTransitionName("cover" + position);
+                                booksViewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        onItemClickListener.onClick(v, position);
+                                    }
+                                });
 
                                 Utils.animateViewColor(booksViewHolder.bookTextcontainer, defaultBackgroundcolor,
                                         palette.getDarkVibrantColor(vibrantSwatch.getRgb()));
@@ -104,20 +104,32 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
     }
 }
 
-class BooksViewHolder extends RecyclerView.ViewHolder {
+class BooksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     protected final FrameLayout bookTextcontainer;
     protected final ImageView bookCover;
     protected final TextView bookTitle;
     protected final TextView bookAuthor;
+    private final OnItemClickListener onItemClickListener;
 
-    public BooksViewHolder(View itemView) {
+    public BooksViewHolder(View itemView, OnItemClickListener onItemClickListener) {
 
         super(itemView);
+        this.onItemClickListener = onItemClickListener;
+
         bookTextcontainer = (FrameLayout) itemView.findViewById(R.id.item_book_text_container);
         bookCover = (ImageView) itemView.findViewById(R.id.item_book_img);
         bookTitle = (TextView) itemView.findViewById(R.id.item_book_title);
         bookAuthor = (TextView) itemView.findViewById(R.id.item_book_author);
+
+        bookCover.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        onItemClickListener.onClick(v, getPosition());
 
     }
 }

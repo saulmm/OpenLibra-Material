@@ -13,6 +13,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,6 +50,12 @@ public class BooksFragment extends Fragment {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         bookRecycler.setLayoutManager(gridLayoutManager);
+        bookRecycler.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
 
         // Init and show progress dialog
         loadingDialog = new ProgressDialog(getActivity());
@@ -124,8 +131,8 @@ public class BooksFragment extends Fragment {
             ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(),
                 new Pair<View, String>(coverImage, "cover" + position));
 
+
             startActivity(detailIntent, options.toBundle());
-            getActivity().overridePendingTransition(0,0);
         }
     };
 }

@@ -2,6 +2,7 @@
 
 <com.saulmm.openlibra.views.views.ObservableScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -39,9 +40,13 @@
          >
 
             <RelativeLayout
+                android:id="@+id/activity_detail_titles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp"
+                android:visibility="invisible"
                 >
 
                 <TextView
@@ -49,10 +54,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:paddingLeft="72dp"
-                    android:text="An amazing title"
                     android:ellipsize="end"
                     android:textSize="24sp"
+                    android:maxLines="2"
                     android:textColor="#FFF"
                     />
 
@@ -63,8 +67,9 @@
                     android:layout_below="@id/activity_detail_title"
                     android:layout_marginTop="8dp"
                     android:fontFamily="sans-serif-medium"
-                    android:paddingLeft="72dp"
                     android:text="The best subtitle"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="#FFF"
                     />
 
@@ -106,6 +111,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_below="@id/activity_detail_title_container"
             >
 
@@ -113,8 +120,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="72dp"
+                android:text="Summary"
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/lorem"
+                />
+
+
 
         </LinearLayout>
     </RelativeLayout>
