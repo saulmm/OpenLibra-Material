@@ -36,10 +36,10 @@ import java.util.ArrayList;
 
 public class BooksFragment extends Fragment {
 
+    private static int COLUMNS = 2;
     public static SparseArray<Bitmap> photoCache = new SparseArray<Bitmap>(1);
 
     private ProgressDialog loadingDialog;
-    private BookAdapter bookAdapter;
     private ArrayList<Book> books;
     private RecyclerView bookRecycler;
 
@@ -47,20 +47,18 @@ public class BooksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_books, container, false);
+
+        // Configure the recyclerview
         bookRecycler = (RecyclerView) rootView.findViewById(R.id.fragment_last_books_recycler);
-
-
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-
-        bookRecycler.setLayoutManager(gridLayoutManager);
+        bookRecycler.setLayoutManager(new GridLayoutManager(getActivity(), COLUMNS));
+        bookRecycler.addItemDecoration(new RecyclerInsetsDecoration(getActivity()));
         bookRecycler.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return false;
             }
         });
-        bookRecycler.addItemDecoration(new RecyclerInsetsDecoration(getActivity()));
+
 
         // Init and show progress dialog
         loadingDialog = new ProgressDialog(getActivity());
@@ -76,15 +74,8 @@ public class BooksFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
+    // In future series this will be implemented with a view model presenter model
     private FutureCallback<String> booksCallback = new FutureCallback<String>() {
-
-
 
 
         @Override
@@ -113,7 +104,7 @@ public class BooksFragment extends Fragment {
 
 
         } else {
-            Log.d("[DEBUG]", "BooksFragment onCompleted - ERROR: "+e.getMessage());
+            Log.d("[DEBUG]", "BooksFragment onCompleted - ERROR: " + e.getMessage());
         }
         }
     };
@@ -123,21 +114,21 @@ public class BooksFragment extends Fragment {
         @Override
         public void onClick(View v, int position) {
 
-            Book selectedBook = books.get(position);
+        Book selectedBook = books.get(position);
 
-            Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-            detailIntent.putExtra("position", position);
-            detailIntent.putExtra("selected_book", selectedBook);
+        Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+        detailIntent.putExtra("position", position);
+        detailIntent.putExtra("selected_book", selectedBook);
 
-            ImageView coverImage = (ImageView) v.findViewById(R.id.item_book_img);
-            ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
-            photoCache.put(position, coverImage.getDrawingCache());
+        ImageView coverImage = (ImageView) v.findViewById(R.id.item_book_img);
+        ((ViewGroup) coverImage.getParent()).setTransitionGroup(false);
+        photoCache.put(position, coverImage.getDrawingCache());
 
-            // Setup the transition to the detail activity
-            ActivityOptions options =  ActivityOptions.makeSceneTransitionAnimation(getActivity(),
-                new Pair<View, String>(coverImage, "cover" + position));
+        // Setup the transition to the detail activity
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
+            new Pair<View, String>(coverImage, "cover" + position));
 
-            startActivity(detailIntent, options.toBundle());
+        startActivity(detailIntent, options.toBundle());
         }
     };
 }
