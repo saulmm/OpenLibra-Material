@@ -29,6 +29,7 @@ import com.saulmm.openlibra.models.Book;
 import com.saulmm.openlibra.models.BookList;
 import com.saulmm.openlibra.network.Api;
 import com.saulmm.openlibra.views.adapters.BookAdapter;
+import com.saulmm.openlibra.views.views.RecyclerInsetsDecoration;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -48,7 +49,10 @@ public class BooksFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_books, container, false);
         bookRecycler = (RecyclerView) rootView.findViewById(R.id.fragment_last_books_recycler);
 
+
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+
         bookRecycler.setLayoutManager(gridLayoutManager);
         bookRecycler.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -56,6 +60,7 @@ public class BooksFragment extends Fragment {
                 return false;
             }
         });
+        bookRecycler.addItemDecoration(new RecyclerInsetsDecoration(getActivity()));
 
         // Init and show progress dialog
         loadingDialog = new ProgressDialog(getActivity());
