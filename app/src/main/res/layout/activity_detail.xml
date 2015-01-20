@@ -133,7 +133,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
-                tools:text="@string/lorem"
+                android:text="@string/lorem"
                 />
 
             <TextView

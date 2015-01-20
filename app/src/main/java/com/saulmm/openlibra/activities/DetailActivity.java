@@ -168,8 +168,12 @@ public class DetailActivity extends Activity {
                 getWindow().setStatusBarColor(vibrantSwatch.getRgb());
                 getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
 
+                String content = selectedBook.getContent();
+
+                if (content != null)
+                    contentTextView.setText(content);
+
                 titleTextView.setText(selectedBook.getTitle());
-                contentTextView.setText(selectedBook.getContent());
                 subtitleTextView.setTextColor(vibrantSwatch.getTitleTextColor());
                 subtitleTextView.setText(selectedBook.getAuthor());
                 ratingValueTextView.setText(selectedBook.getRating() + " / 10");

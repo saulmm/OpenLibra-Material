@@ -107,23 +107,25 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
 
 class BooksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    protected final FrameLayout bookTextcontainer;
-    protected final ImageView bookCover;
-    protected final TextView bookTitle;
-    protected final TextView bookAuthor;
-    private final OnItemClickListener onItemClickListener;
+    protected  FrameLayout bookTextcontainer;
+    protected  ImageView bookCover;
+    protected  TextView bookTitle;
+    protected  TextView bookAuthor;
+    private  OnItemClickListener onItemClickListener;
 
     public BooksViewHolder(View itemView, OnItemClickListener onItemClickListener) {
 
         super(itemView);
         this.onItemClickListener = onItemClickListener;
 
-        bookTextcontainer = (FrameLayout) itemView.findViewById(R.id.item_book_text_container);
-        bookCover = (ImageView) itemView.findViewById(R.id.item_book_img);
-        bookTitle = (TextView) itemView.findViewById(R.id.item_book_title);
-        bookAuthor = (TextView) itemView.findViewById(R.id.item_book_author);
+//        if (itemView != null) {
 
-        bookCover.setOnClickListener(this);
+            bookTextcontainer = (FrameLayout) itemView.findViewById(R.id.item_book_text_container);
+            bookCover = (ImageView) itemView.findViewById(R.id.item_book_img);
+            bookTitle = (TextView) itemView.findViewById(R.id.item_book_title);
+            bookAuthor = (TextView) itemView.findViewById(R.id.item_book_author);
+            bookCover.setOnClickListener(this);
+//        }
 
     }
 
