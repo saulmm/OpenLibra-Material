@@ -23,16 +23,27 @@ import com.saulmm.openlibra.other.CustomAnimatorListener;
 import com.saulmm.openlibra.other.CustomTransitionListener;
 import com.saulmm.openlibra.views.Utils;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 public class DetailActivity extends Activity {
 
     // UI Stuff
-    private FrameLayout contentCard;
-    private View fabButton;
-    private View titleContainer;
-    private View titlesContainer;
+    @InjectView(R.id.card_view)                         FrameLayout contentCard;
+    @InjectView(R.id.activity_detail_fab)               View fabButton;
+    @InjectView(R.id.activity_detail_main_container)    View mainContaienr;
+    @InjectView(R.id.activity_detail_titles_container)  View titlesContainer;
+    @InjectView(R.id.activity_detail_toolbar)           Toolbar toolbar;
+    @InjectView(R.id.activity_detail_book_info)         LinearLayout bookInfoLayout;
+    @InjectView(R.id.activity_detail_content)           TextView contentTextView;
+    @InjectView(R.id.activity_detail_rating_title)      TextView ratingTextView;
+    @InjectView(R.id.activity_detail_rating_value)      TextView ratingValueTextView;
+    @InjectView(R.id.activity_detail_summary_title)     TextView summaryTitle;
+    @InjectView(R.id.activity_detail_title)             TextView titleTextView;
+    @InjectView(R.id.activity_detail_subtitle)          TextView subtitleTextView;
+
     private Book selectedBook;
-    private LinearLayout bookInfoLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +51,11 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        // Recover items from the intent
-        final int position = getIntent().getIntExtra("position",0);
-        selectedBook = (Book) getIntent().getSerializableExtra("selected_book");
+        ButterKnife.inject(this);
 
-        titlesContainer = findViewById(R.id.activity_detail_titles);
+        // Recover items from the intent
+        final int position = getIntent().getIntExtra("position", 0);
+        selectedBook = (Book) getIntent().getSerializableExtra("selected_book");
 
         // Recover book cover from BooksFragment cache
         Bitmap bookCoverBitmap = BooksFragment.photoCache.get(position);
@@ -52,24 +63,19 @@ public class DetailActivity extends Activity {
         toolbarBookCover.setImageBitmap(bookCoverBitmap);
 
         // Fab button
-        fabButton = findViewById(R.id.activity_detail_fab);
         fabButton.setScaleX(0);
         fabButton.setScaleY(0);
 
         // Book summary card
-        contentCard = (FrameLayout) findViewById(R.id.card_view);
         Utils.configuredHideYView(contentCard);
 
         // Book info layout
-        bookInfoLayout = (LinearLayout) findViewById(R.id.activity_detail_book_info);
         Utils.configuredHideYView(bookInfoLayout);
 
         // Title container
-        titleContainer =  findViewById(R.id.activity_detail_title_container);
-        Utils.configuredHideYView(titleContainer);
+        Utils.configuredHideYView(mainContaienr);
 
         // Define toolbar as the shared element
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_detail_toolbar);
         toolbar.setBackground(new BitmapDrawable(getResources(), bookCoverBitmap));
         toolbar.setTransitionName("cover" + position);
 
@@ -84,9 +90,9 @@ public class DetailActivity extends Activity {
     /**
      * I use a listener to get notified when the enter transition ends, and with that notifications
      * build my own coreography built with the elements of the UI
-     *
+     * <p/>
      * Animations order
-     *
+     * <p/>
      * 1. The image is animated automatically by the SharedElementTransition
      * 2. The layout that contains the titles
      * 3. An alpha transition to show the text of the titles
@@ -97,24 +103,24 @@ public class DetailActivity extends Activity {
         @Override
         public void onTransitionEnd(Transition transition) {
 
-        super.onTransitionEnd(transition);
+            super.onTransitionEnd(transition);
 
-        ViewPropertyAnimator showTitleAnimator = Utils.showViewByScale(titleContainer);
-        showTitleAnimator.setListener(new CustomAnimatorListener() {
+            ViewPropertyAnimator showTitleAnimator = Utils.showViewByScale(mainContaienr);
+            showTitleAnimator.setListener(new CustomAnimatorListener() {
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
+                @Override
+                public void onAnimationEnd(Animator animation) {
 
-            super.onAnimationEnd(animation);
-            titlesContainer.startAnimation(AnimationUtils.loadAnimation(DetailActivity.this, R.anim.alpha_on));
-            titlesContainer.setVisibility(View.VISIBLE);
+                    super.onAnimationEnd(animation);
+                    titlesContainer.startAnimation(AnimationUtils.loadAnimation(DetailActivity.this, R.anim.alpha_on));
+                    titlesContainer.setVisibility(View.VISIBLE);
 
-            Utils.showViewByScale(fabButton).start();
-            Utils.showViewByScale(bookInfoLayout).start();
-            }
-        });
+                    Utils.showViewByScale(fabButton).start();
+                    Utils.showViewByScale(bookInfoLayout).start();
+                }
+            });
 
-        showTitleAnimator.start();
+            showTitleAnimator.start();
         }
     };
 
@@ -133,16 +139,16 @@ public class DetailActivity extends Activity {
             @Override
             public void onAnimationEnd(Animator animation) {
 
-            ViewPropertyAnimator hideFabAnimator = Utils.hideViewByScaleY(titleContainer);
-            hideFabAnimator.setListener(new CustomAnimatorListener() {
+                ViewPropertyAnimator hideFabAnimator = Utils.hideViewByScaleY(mainContaienr);
+                hideFabAnimator.setListener(new CustomAnimatorListener() {
 
-                @Override
-                public void onAnimationEnd(Animator animation) {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
 
-                super.onAnimationEnd(animation);
-                coolBack();
-                }
-            });
+                        super.onAnimationEnd(animation);
+                        coolBack();
+                    }
+                });
             }
         });
 
@@ -154,40 +160,26 @@ public class DetailActivity extends Activity {
         @Override
         public void onGenerated(Palette palette) {
 
-        if (palette.getVibrantSwatch() != null) {
+            if (palette.getVibrantSwatch() != null) {
 
-            Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
-            titleContainer.setBackgroundColor(vibrantSwatch.getRgb());
+                Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
+                mainContaienr.setBackgroundColor(vibrantSwatch.getRgb());
 
-            getWindow().setStatusBarColor(vibrantSwatch.getRgb());
-            getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
+                getWindow().setStatusBarColor(vibrantSwatch.getRgb());
+                getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
 
+                titleTextView.setText(selectedBook.getTitle());
+                contentTextView.setText(selectedBook.getContent());
+                subtitleTextView.setTextColor(vibrantSwatch.getTitleTextColor());
+                subtitleTextView.setText(selectedBook.getAuthor());
+                ratingValueTextView.setText(selectedBook.getRating() + " / 10");
 
-            TextView contentTextView = (TextView) findViewById(R.id.activity_detail_content);
-            String content = selectedBook.getContent();
-            contentTextView.setText(content);
-
-            TextView ratingTextView = (TextView) findViewById(R.id.activity_detail_rating_title);
-            ratingTextView.setTextColor(vibrantSwatch.getTitleTextColor());
-            ratingTextView.setTextColor(vibrantSwatch.getRgb());
-
-            TextView ratingValueTextView = (TextView) findViewById(R.id.activity_detail_rating_value);
-            ratingValueTextView.setText(selectedBook.getRating() + " / 10");
-
-            TextView summaryTitle = (TextView) findViewById(R.id.activity_detail_summary_title);
-            summaryTitle.setTextColor(vibrantSwatch.getRgb());
-
-            TextView titleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_title);
-            titleTV.setTextColor(vibrantSwatch.getTitleTextColor());
-            titleTV.setText(selectedBook.getTitle());
-
-            TextView subtitleTV = (TextView) titleContainer.findViewById(R.id.activity_detail_subtitle);
-            subtitleTV.setTextColor(vibrantSwatch.getTitleTextColor());
-            subtitleTV.setText(selectedBook.getAuthor());
-
-            ((TextView) titleContainer.findViewById(R.id.activity_detail_subtitle))
-                .setTextColor(vibrantSwatch.getTitleTextColor());
-        }
+                summaryTitle.setTextColor(vibrantSwatch.getRgb());
+                titleTextView.setTextColor(vibrantSwatch.getTitleTextColor());
+                subtitleTextView.setTextColor(vibrantSwatch.getTitleTextColor());
+                ratingTextView.setTextColor(vibrantSwatch.getTitleTextColor());
+                ratingTextView.setTextColor(vibrantSwatch.getRgb());
+            }
         }
     };
 

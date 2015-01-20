@@ -29,9 +29,8 @@
                 android:src="@drawable/ic_launcher"
                 />
         </android.support.v7.widget.Toolbar>
-
         <FrameLayout
-            android:id="@+id/activity_detail_title_container"
+            android:id="@+id/activity_detail_main_container"
             android:layout_width="match_parent"
             android:layout_height="128dp"
             android:layout_below="@id/activity_detail_toolbar"
@@ -40,7 +39,7 @@
             >
 
             <RelativeLayout
-                android:id="@+id/activity_detail_titles"
+                android:id="@+id/activity_detail_titles_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -114,7 +113,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:background="#EEEEEE"
-            android:layout_below="@id/activity_detail_title_container"
+            android:layout_below="@id/activity_detail_main_container"
             >
 
 
@@ -144,7 +143,6 @@
                 android:gravity="center_vertical"
                 android:textAllCaps="true"
                 android:text="Rating"
-
                 />
 
             <TextView
