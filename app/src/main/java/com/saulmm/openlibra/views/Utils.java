@@ -34,7 +34,7 @@ public class Utils {
      *
      * @param v the view to set the pivot
      */
-    public static void configuredHideYView (View v) {
+    public static void configureHideYView(View v) {
 
         v.setScaleY(0);
         v.setPivotY(0);

@@ -66,14 +66,10 @@ public class DetailActivity extends Activity {
         fabButton.setScaleX(0);
         fabButton.setScaleY(0);
 
-        // Book summary card
-        Utils.configuredHideYView(contentCard);
-
-        // Book info layout
-        Utils.configuredHideYView(bookInfoLayout);
-
-        // Title container
-        Utils.configuredHideYView(mainContaienr);
+        // Configure the views setting animation start point
+        Utils.configureHideYView(contentCard);
+        Utils.configureHideYView(bookInfoLayout);
+        Utils.configureHideYView(mainContaienr);
 
         // Define toolbar as the shared element
         toolbar.setBackground(new BitmapDrawable(getResources(), bookCoverBitmap));
@@ -90,9 +86,9 @@ public class DetailActivity extends Activity {
     /**
      * I use a listener to get notified when the enter transition ends, and with that notifications
      * build my own coreography built with the elements of the UI
-     * <p/>
-     * Animations order
-     * <p/>
+     *
+     * Animations order:
+     *
      * 1. The image is animated automatically by the SharedElementTransition
      * 2. The layout that contains the titles
      * 3. An alpha transition to show the text of the titles
