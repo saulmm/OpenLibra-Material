@@ -20,7 +20,7 @@ public class RecyclerInsetsDecoration extends RecyclerView.ItemDecoration {
     private int mInsets;
 
     public RecyclerInsetsDecoration(Context context) {
-        mInsets = context.getResources().getDimensionPixelSize(R.dimen.card_insets);
+        mInsets = context.getResources().getDimensionPixelSize(R.dimen.insets);
     }
 
     @Override
@@ -28,5 +28,6 @@ public class RecyclerInsetsDecoration extends RecyclerView.ItemDecoration {
 
         //We can supply forced insets for each item view here in the Rect
         super.getItemOffsets(outRect, view, parent, state);
+        outRect.set(mInsets, mInsets, mInsets, mInsets);
     }
 }
