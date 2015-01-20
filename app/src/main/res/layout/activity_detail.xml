@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher"
                 />
         </android.support.v7.widget.Toolbar>
         <FrameLayout
@@ -116,14 +115,12 @@
             android:layout_below="@id/activity_detail_main_container"
             >
 
-
             <TextView
                 android:id="@+id/activity_detail_summary_title"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:gravity="center_vertical"
-                android:textAllCaps="true"
                 android:text="Summary"
+                style="@style/OpenLibraHeaderTextView"
                 />
 
             <TextView
@@ -132,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_marginTop="8dp"
-                android:lineSpacingExtra="4dp"
+                android:lineSpacingExtra="6dp"
                 android:text="@string/lorem"
                 />
 
@@ -140,9 +137,8 @@
                 android:id="@+id/activity_detail_rating_title"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:gravity="center_vertical"
-                android:textAllCaps="true"
                 android:text="Rating"
+                style="@style/OpenLibraHeaderTextView"
                 />
 
             <TextView
