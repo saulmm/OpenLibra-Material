@@ -1,10 +1,8 @@
 package com.saulmm.openlibra.views.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,18 +76,21 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
 
                                 Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
 
-                                booksViewHolder.bookTitle.setTextColor(vibrantSwatch.getTitleTextColor());
-                                booksViewHolder.bookAuthor.setTextColor(vibrantSwatch.getTitleTextColor());
-                                booksViewHolder.bookCover.setTransitionName("cover" + position);
-                                booksViewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        onItemClickListener.onClick(v, position);
-                                    }
-                                });
+                                if (vibrantSwatch != null) {
 
-                                Utils.animateViewColor(booksViewHolder.bookTextcontainer, defaultBackgroundcolor,
-                                    vibrantSwatch.getRgb());
+                                    booksViewHolder.bookTitle.setTextColor(vibrantSwatch.getTitleTextColor());
+                                    booksViewHolder.bookAuthor.setTextColor(vibrantSwatch.getTitleTextColor());
+                                    booksViewHolder.bookCover.setTransitionName("cover" + position);
+                                    booksViewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            onItemClickListener.onClick(v, position);
+                                        }
+                                    });
+
+                                    Utils.animateViewColor(booksViewHolder.bookTextcontainer, defaultBackgroundcolor,
+                                        vibrantSwatch.getRgb());
+                                }
                             }
                         });
                     }
