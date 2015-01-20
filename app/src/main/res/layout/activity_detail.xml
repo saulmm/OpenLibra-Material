@@ -37,7 +37,7 @@
             android:layout_below="@id/activity_detail_toolbar"
             android:elevation="4dp"
             android:background="?colorPrimary"
-         >
+            >
 
             <RelativeLayout
                 android:id="@+id/activity_detail_titles"
@@ -74,7 +74,6 @@
                     />
 
             </RelativeLayout>
-
 
         </FrameLayout>
 
@@ -118,23 +117,45 @@
             android:layout_below="@id/activity_detail_title_container"
             >
 
+
             <TextView
                 android:id="@+id/activity_detail_summary_title"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
+                android:textAllCaps="true"
                 android:text="Summary"
                 />
 
             <TextView
+                android:id="@+id/activity_detail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
-                android:text="@string/lorem"
+                tools:text="@string/lorem"
                 />
 
+            <TextView
+                android:id="@+id/activity_detail_rating_title"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:textAllCaps="true"
+                android:text="Rating"
+
+                />
+
+            <TextView
+                android:id="@+id/activity_detail_rating_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textAllCaps="true"
+                android:textSize="50sp"
+                android:text="7.9"
+                />
         </LinearLayout>
     </RelativeLayout>
 </com.saulmm.openlibra.views.views.ObservableScrollView>

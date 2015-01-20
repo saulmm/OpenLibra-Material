@@ -162,6 +162,18 @@ public class DetailActivity extends Activity {
             getWindow().setStatusBarColor(vibrantSwatch.getRgb());
             getWindow().setNavigationBarColor(vibrantSwatch.getRgb());
 
+
+            TextView contentTextView = (TextView) findViewById(R.id.activity_detail_content);
+            String content = selectedBook.getContent();
+            contentTextView.setText(content);
+
+            TextView ratingTextView = (TextView) findViewById(R.id.activity_detail_rating_title);
+            ratingTextView.setTextColor(vibrantSwatch.getTitleTextColor());
+            ratingTextView.setTextColor(vibrantSwatch.getRgb());
+
+            TextView ratingValueTextView = (TextView) findViewById(R.id.activity_detail_rating_value);
+            ratingValueTextView.setText(selectedBook.getRating() + " / 10");
+
             TextView summaryTitle = (TextView) findViewById(R.id.activity_detail_summary_title);
             summaryTitle.setTextColor(vibrantSwatch.getRgb());
 
@@ -178,8 +190,6 @@ public class DetailActivity extends Activity {
         }
         }
     };
-
-
 
     private void coolBack() {
 
