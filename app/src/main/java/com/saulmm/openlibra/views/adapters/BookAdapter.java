@@ -1,8 +1,10 @@
 package com.saulmm.openlibra.views.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,32 +72,42 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
 
                     if (e == null && result != null && result.getBitmapInfo().bitmap != null) {
 
-                        Palette.generateAsync(result.getBitmapInfo().bitmap, new Palette.PaletteAsyncListener() {
-                            @Override
-                            public void onGenerated(Palette palette) {
-
-                                Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
-
-                                if (vibrantSwatch != null) {
-
-                                    booksViewHolder.bookTitle.setTextColor(vibrantSwatch.getTitleTextColor());
-                                    booksViewHolder.bookAuthor.setTextColor(vibrantSwatch.getTitleTextColor());
-                                    booksViewHolder.bookCover.setTransitionName("cover" + position);
-                                    booksViewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            onItemClickListener.onClick(v, position);
-                                        }
-                                    });
-
-                                    Utils.animateViewColor(booksViewHolder.bookTextcontainer, defaultBackgroundcolor,
-                                        vibrantSwatch.getRgb());
-                                }
-                            }
-                        });
+                        setCellColors(result.getBitmapInfo().bitmap, booksViewHolder, position);
                     }
                 }
             });
+    }
+
+    public void setCellColors (Bitmap b, final BooksViewHolder viewHolder, final int position) {
+
+        Palette.generateAsync(b, new Palette.PaletteAsyncListener() {
+
+            @Override
+            public void onGenerated(Palette palette) {
+
+                Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
+
+                if (vibrantSwatch != null) {
+
+                    viewHolder.bookTitle.setTextColor(vibrantSwatch.getTitleTextColor());
+                    viewHolder.bookAuthor.setTextColor(vibrantSwatch.getTitleTextColor());
+                    viewHolder.bookCover.setTransitionName("cover" + position);
+                    viewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onItemClickListener.onClick(v, position);
+                        }
+                    });
+
+                    Utils.animateViewColor(viewHolder.bookTextcontainer, defaultBackgroundcolor,
+                        vibrantSwatch.getRgb());
+
+                } else {
+
+                    Log.e("[ERROR]", "BookAdapter onGenerated - The VibrantSwatch were null at: "+position);
+                }
+            }
+        });
     }
 
     @Override
