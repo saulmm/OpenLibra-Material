@@ -70,7 +70,7 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
                 @Override
                 public void onCompleted(Exception e, ImageViewBitmapInfo result) {
 
-                    if (e == null && result != null && result.getBitmapInfo().bitmap != null) {
+                    if (e == null && result != null) {
 
                         setCellColors(result.getBitmapInfo().bitmap, booksViewHolder, position);
                     }
@@ -80,34 +80,36 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
 
     public void setCellColors (Bitmap b, final BooksViewHolder viewHolder, final int position) {
 
-        Palette.generateAsync(b, new Palette.PaletteAsyncListener() {
+        if (b != null) {
+            Palette.generateAsync(b, new Palette.PaletteAsyncListener() {
 
-            @Override
-            public void onGenerated(Palette palette) {
+                @Override
+                public void onGenerated(Palette palette) {
 
-                Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
+                    Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
 
-                if (vibrantSwatch != null) {
+                    if (vibrantSwatch != null) {
 
-                    viewHolder.bookTitle.setTextColor(vibrantSwatch.getTitleTextColor());
-                    viewHolder.bookAuthor.setTextColor(vibrantSwatch.getTitleTextColor());
-                    viewHolder.bookCover.setTransitionName("cover" + position);
-                    viewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onItemClickListener.onClick(v, position);
-                        }
-                    });
+                        viewHolder.bookTitle.setTextColor(vibrantSwatch.getTitleTextColor());
+                        viewHolder.bookAuthor.setTextColor(vibrantSwatch.getTitleTextColor());
+                        viewHolder.bookCover.setTransitionName("cover" + position);
+                        viewHolder.bookTextcontainer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onItemClickListener.onClick(v, position);
+                            }
+                        });
 
-                    Utils.animateViewColor(viewHolder.bookTextcontainer, defaultBackgroundcolor,
-                        vibrantSwatch.getRgb());
+                        Utils.animateViewColor(viewHolder.bookTextcontainer, defaultBackgroundcolor,
+                            vibrantSwatch.getRgb());
 
-                } else {
+                    } else {
 
-                    Log.e("[ERROR]", "BookAdapter onGenerated - The VibrantSwatch were null at: "+position);
+                        Log.e("[ERROR]", "BookAdapter onGenerated - The VibrantSwatch were null at: " + position);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
