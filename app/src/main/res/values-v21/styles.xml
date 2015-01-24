@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:windowBackground">@color/w_background</item>
-        <item name="android:navigationBarColor">@color/color_primary_trans</item>
+        <item name="android:navigationBarColor">@color/color_primary</item>
 
         <!-- android transitions -->
         <item name="android:windowContentTransitions">true</item>

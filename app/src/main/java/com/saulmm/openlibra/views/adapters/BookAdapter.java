@@ -39,7 +39,6 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
     public BookAdapter(ArrayList<Book> books) {
 
         this.books = books;
-
     }
 
     @Override
@@ -77,6 +76,7 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
                 }
             });
     }
+
 
     public void setCellColors (Bitmap b, final BooksViewHolder viewHolder, final int position) {
 
