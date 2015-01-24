@@ -5,11 +5,11 @@
     android:fillAfter="true">
 
     <translate
-
-        android:duration="1000"
+        android:duration="@integer/anim_trans_duration_millis"
         android:startOffset="0"
         android:fromXDelta="0"
         android:fromYDelta="0"
         android:toXDelta="0"
-        android:toYDelta="-100%" />
+        android:toYDelta="-100%"
+        />
 </set>
