@@ -13,8 +13,18 @@
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/color_primary"
-        android:elevation="10dp"
+        android:title=""
+        android:elevation="10dp">
+
+        <com.saulmm.openlibra.views.views.LobsterTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="22sp"
+            android:textColor="#FFF"
         />
+
+    </android.support.v7.widget.Toolbar>
 
     <fragment
         android:id="@+id/activity_main_last_books_fragment"
