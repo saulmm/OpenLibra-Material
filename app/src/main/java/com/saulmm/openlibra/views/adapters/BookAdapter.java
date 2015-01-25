@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,8 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
     private Context context;
     private int defaultBackgroundcolor;
     private OnItemClickListener onItemClickListener;
+    private int lastPosition = -1;
+    private static final int SCALE_DELAY = 30;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -72,10 +75,30 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
                     if (e == null && result != null) {
 
                         setCellColors(result.getBitmapInfo().bitmap, booksViewHolder, position);
-
+                        amimateCell(booksViewHolder);
                     }
                 }
             });
+    }
+    private static final int MAX_PHOTO_ANIMATION_DELAY = 100;
+    private long profileHeaderAnimationStartTime = 0;
+
+    private void amimateCell(BooksViewHolder booksViewHolder) {
+
+        int cellPosition = booksViewHolder.getPosition();
+
+        if (!booksViewHolder.animated) {
+
+            booksViewHolder.animated = true;
+            booksViewHolder.bookContainer.setScaleY(0);
+            booksViewHolder.bookContainer.setScaleX(0);
+            booksViewHolder.bookContainer.animate()
+                .scaleY(1).scaleX(1)
+                .setDuration(200)
+                .setStartDelay(SCALE_DELAY * cellPosition)
+                .start();
+        }
+
     }
 
 
@@ -122,17 +145,20 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
 
 class BooksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    protected  LinearLayout bookContainer;
     protected RelativeLayout bookTextcontainer;
     protected ImageView bookCover;
     protected TextView bookTitle;
     protected TextView bookAuthor;
     private OnItemClickListener onItemClickListener;
+    protected boolean animated = false;
 
     public BooksViewHolder(View itemView, OnItemClickListener onItemClickListener) {
 
         super(itemView);
         this.onItemClickListener = onItemClickListener;
 
+        bookContainer = (LinearLayout) itemView.findViewById(R.id.item_book_container);
         bookTextcontainer = (RelativeLayout) itemView.findViewById(R.id.item_book_text_container);
         bookCover = (ImageView) itemView.findViewById(R.id.item_book_img);
         bookTitle = (TextView) itemView.findViewById(R.id.item_book_title);

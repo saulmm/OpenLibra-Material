@@ -2,8 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_book_container"
     android:layout_width="196dp"
     android:layout_height="248dp"
+    android:scaleX="0"
+    android:scaleY="0"
     android:orientation="vertical"
     >
 
