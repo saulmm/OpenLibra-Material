@@ -1,66 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="196dp"
+    android:layout_height="248dp"
+    android:orientation="vertical"
     >
 
-    <LinearLayout
-        android:layout_width="196dp"
-        android:layout_height="248dp"
-        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/item_book_img"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:transitionName="bookCover"
+        android:scaleType="centerCrop"
+        android:background="@color/book_without_palette"
+        />
 
-        <ImageView
-            android:id="@+id/item_book_img"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:transitionName="bookCover"
-            android:scaleType="centerCrop"
-            android:background="@color/book_without_palette"/>
+    <RelativeLayout
+        android:id="@+id/item_book_text_container"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:background="@color/book_without_palette"
+        >
 
-        <FrameLayout
-            android:id="@+id/item_book_text_container"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:background="@color/book_without_palette"
-            >
+        <TextView
+            android:id="@+id/item_book_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/text_without_palette"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textSize="16sp"
+            tools:text="test"
+            />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:elevation="10dp"
-                android:orientation="vertical"
-                >
+        <TextView
+            android:id="@+id/item_book_author"
+            android:layout_below="@id/item_book_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_without_palette"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textSize="15sp"
+            tools:text="test"
+            />
 
-                <TextView
-                    android:id="@+id/item_book_title"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/text_without_palette"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:textSize="16sp"
-                    android:text="test"
-                    />
-
-                <TextView
-                    android:id="@+id/item_book_author"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/text_without_palette"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:textSize="15sp"
-                    android:text="test"
-                    />
-
-            </LinearLayout>
-        </FrameLayout>
-    </LinearLayout>
-</FrameLayout>
+    </RelativeLayout>
+</LinearLayout>

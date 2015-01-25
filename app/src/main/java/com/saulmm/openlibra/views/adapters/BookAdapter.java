@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.koushikdutta.async.future.FutureCallback;
@@ -72,6 +72,7 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
                     if (e == null && result != null) {
 
                         setCellColors(result.getBitmapInfo().bitmap, booksViewHolder, position);
+
                     }
                 }
             });
@@ -121,25 +122,22 @@ public class BookAdapter extends RecyclerView.Adapter<BooksViewHolder> {
 
 class BooksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    protected  FrameLayout bookTextcontainer;
-    protected  ImageView bookCover;
-    protected  TextView bookTitle;
-    protected  TextView bookAuthor;
-    private  OnItemClickListener onItemClickListener;
+    protected RelativeLayout bookTextcontainer;
+    protected ImageView bookCover;
+    protected TextView bookTitle;
+    protected TextView bookAuthor;
+    private OnItemClickListener onItemClickListener;
 
     public BooksViewHolder(View itemView, OnItemClickListener onItemClickListener) {
 
         super(itemView);
         this.onItemClickListener = onItemClickListener;
 
-//        if (itemView != null) {
-
-            bookTextcontainer = (FrameLayout) itemView.findViewById(R.id.item_book_text_container);
-            bookCover = (ImageView) itemView.findViewById(R.id.item_book_img);
-            bookTitle = (TextView) itemView.findViewById(R.id.item_book_title);
-            bookAuthor = (TextView) itemView.findViewById(R.id.item_book_author);
-            bookCover.setOnClickListener(this);
-//        }
+        bookTextcontainer = (RelativeLayout) itemView.findViewById(R.id.item_book_text_container);
+        bookCover = (ImageView) itemView.findViewById(R.id.item_book_img);
+        bookTitle = (TextView) itemView.findViewById(R.id.item_book_title);
+        bookAuthor = (TextView) itemView.findViewById(R.id.item_book_author);
+        bookCover.setOnClickListener(this);
 
     }
 
