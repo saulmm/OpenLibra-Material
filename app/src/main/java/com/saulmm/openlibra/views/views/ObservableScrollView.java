@@ -6,9 +6,7 @@ import android.widget.ScrollView;
 
 import com.saulmm.openlibra.ScrollViewListener;
 
-/**
- * Created by saulmm on 19/11/14.
- */
+
 public class ObservableScrollView extends ScrollView {
 
     private ScrollViewListener scrollViewListener = null;
